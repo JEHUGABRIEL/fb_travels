@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "@fontsource-variable/bricolage-grotesque/index.css";
 import "@fontsource-variable/figtree/index.css";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "./globals.css";

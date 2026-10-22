@@ -2,9 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { heroSlides, trustPoints } from "@/lib/site";
+import { heroSlides } from "@/lib/site";
 
 const DELAY = 6000;
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -62,11 +60,14 @@ export function HeroSlider() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 pb-44 pt-16 text-center sm:pt-20 lg:pt-24">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-4xl">
           <div className="grid">
             {heroSlides.map((slide, i) => {
               const active = i === index;
               const Title = i === 0 ? "h1" : "h2";
+              const at = slide.title.indexOf(slide.accent);
+              const before = at === -1 ? slide.title : slide.title.slice(0, at);
+              const after = at === -1 ? "" : slide.title.slice(at + slide.accent.length);
               return (
                 <div
                   key={slide.title}
@@ -77,25 +78,19 @@ export function HeroSlider() {
                       : "pointer-events-none translate-y-3 opacity-0"
                   }`}
                 >
-                  <Title className="font-display text-4xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-[4.4rem]">
-                    {slide.title}
+                  <Title className="text-balance font-display text-[2.1rem] font-extrabold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-[3.9rem]">
+                    {before}
+                    <span className="mx-1 inline-block -rotate-1 rounded-[3px] bg-soleil px-[0.2em] pb-[0.03em] align-baseline">
+                      <span className="font-serif text-[1.12em] font-normal italic leading-[0.95] text-nuit">
+                        {slide.accent}
+                      </span>
+                    </span>
+                    {after}
                   </Title>
-                  <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
-                    {slide.text}
-                  </p>
                 </div>
               );
             })}
           </div>
-
-          <ul className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/75">
-            {trustPoints.slice(0, 3).map((t) => (
-              <li key={t} className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCircleCheck} className="h-4 w-4 text-soleil" />
-                {t}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

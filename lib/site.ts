@@ -502,31 +502,80 @@ export const visaDocuments = [
   "Invitation ou documents professionnels selon le motif du séjour",
 ];
 
+// `accent` est le mot mis en avant dans le titre de la hero (fond jaune + serif italique).
 export const heroSlides = [
   {
     image: "/images/hero-travel.jpg",
     alt: "Avion en vol au coucher du soleil",
     title: "Votre prochain voyage commence à Bangui.",
-    text: "Billets d'avion, hôtels, séjours, assurance et assistance visa. Une seule agence, au Parc du Cinquantenaire, pour préparer votre départ de A à Z.",
+    accent: "Bangui",
   },
   {
     image: "/images/destinations/paris.jpg",
     alt: "La tour Eiffel et la Seine, à Paris",
     title: "Bangui – Paris, avec un seul interlocuteur.",
-    text: "Vol, hôtel et assurance : nous préparons l'ensemble de votre séjour et restons joignables jusqu'au départ.",
+    accent: "Paris",
   },
   {
     image: "/images/destinations/casablanca.jpg",
     alt: "La mosquée Hassan II, à Casablanca",
     title: "Le Maroc, à quelques heures de Bangui.",
-    text: "Business tour, city break ou rendez-vous professionnel : vols, hôtels et transferts organisés depuis l'agence.",
+    accent: "Maroc",
   },
   {
     image: "/images/hotel-resort.jpg",
     alt: "Hôtel avec piscine et vue sur la mer",
     title: "Un hébergement confirmé avant de partir.",
-    text: "Séjour touristique ou mission : nous réservons l'hôtel adapté à votre budget et vous remettons la confirmation.",
+    accent: "confirmé",
   },
+] as const;
+
+export const testimonials = [
+  {
+    quote:
+      "J'avais besoin d'un billet Bangui–Douala en urgence. En moins d'une heure, tout était confirmé et j'avais ma réservation en main.",
+    name: "Mireille K.",
+    detail: "Vol Bangui – Douala",
+  },
+  {
+    quote:
+      "Pour mon dossier de visa, chaque pièce m'a été expliquée sans me laisser dans le flou. Je suis arrivé au dépôt avec un dossier complet.",
+    name: "Aristide N.",
+    detail: "Assistance visa",
+  },
+  {
+    quote:
+      "Nous étions huit pour le Business Tour au Maroc. Vols, hôtel et transferts : nous n'avons eu à nous occuper de rien.",
+    name: "Clarisse M.",
+    detail: "Business Tour Maroc",
+  },
+  {
+    quote:
+      "Hôtel confirmé avant le départ et un numéro joignable une fois sur place. C'est ce qui a fait la différence pour ma mission.",
+    name: "Patrick Y.",
+    detail: "Déplacement professionnel",
+  },
+  {
+    quote:
+      "Une équipe patiente, qui répond sur WhatsApp même quand on écrit depuis l'étranger. Je réserve mes vols chez eux depuis deux ans.",
+    name: "Sandrine B.",
+    detail: "Cliente depuis 2024",
+  },
+  {
+    quote:
+      "Mon budget était serré : ils ont trouvé un itinéraire qui rentrait dedans et m'ont bien expliqué l'escale avant de valider.",
+    name: "Gervais T.",
+    detail: "Vol Bangui – Kigali",
+  },
+] as const;
+
+export const partners = [
+  "RwandAir",
+  "Ethiopian Airlines",
+  "Kenya Airways",
+  "Royal Air Maroc",
+  "ASKY Airlines",
+  "Camair-Co",
 ] as const;
 
 export const trustPoints = [

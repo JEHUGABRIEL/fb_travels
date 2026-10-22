@@ -20,6 +20,8 @@ import { DestinationGrid } from "@/components/DestinationGrid";
 import { HotelGrid } from "@/components/HotelGrid";
 import { RouteMap } from "@/components/RouteMap";
 import { Faq } from "@/components/Faq";
+import { Testimonials } from "@/components/Testimonials";
+import { Partners } from "@/components/Partners";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { JsonLd } from "@/components/JsonLd";
 import { buildMetadata, faqJsonLd } from "@/lib/seo";
@@ -406,6 +408,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Témoignages & partenaires */}
+      <Testimonials />
+      <Partners />
 
       {/* FAQ */}
       <section id="faq" className="mx-auto max-w-7xl px-5 py-20">

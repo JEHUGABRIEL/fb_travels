@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@theme {
+  --color-nuit: #0b1f4b;
+  --color-nuit-profond: #071638;
+  --color-azur: #1b4fa8;
+  --color-soleil: #f4a300;
+  --color-soleil-clair: #ffc247;
+  --color-brume: #eaf0f8;
+  --color-corail: #e4572e;
+
+  --font-display: "Bricolage Grotesque Variable", "Trebuchet MS", sans-serif;
+  --font-sans: "Figtree Variable", "Segoe UI", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-nuit);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-soleil);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-soleil);
+  color: var(--color-nuit);
+}
+
+/* Tableau des départs : la seule animation autonome du site */
+.board {
+  perspective: 900px;
+}
+
+.tile {
+  display: inline-block;
+  width: 0.7em;
+  margin-right: 2px;
+  padding: 0.08em 0;
+  text-align: center;
+  line-height: 1.25;
+  color: var(--color-soleil-clair);
+  background: linear-gradient(
+    to bottom,
+    #102a63 0%,
+    #102a63 49%,
+    #061431 49%,
+    #061431 51%,
+    #0c2354 51%,
+    #0c2354 100%
+  );
+  border-radius: 2px;
+  font-variant-numeric: tabular-nums;
+  animation: tile-flip 0.55s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+  transform-origin: 50% 50%;
+}
+
+.tile-gap {
+  display: inline-block;
+  width: 0.35em;
+}
+
+@keyframes tile-flip {
+  0% {
+    transform: rotateX(-95deg);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .tile {
+    animation: none;
+  }
+}
+
+/* Trait d'arc des liaisons */
+.route-arc {
+  stroke-dasharray: 6 7;
+}
+
+/* FAQ : rotation du chevron à l'ouverture */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+
+/* Page de chargement : avion et barre de progression */
+.loader-plane {
+  animation: loader-float 1.8s ease-in-out infinite;
+}
+
+@keyframes loader-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-12deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-12deg);
+  }
+}
+
+.loader-bar {
+  animation: loader-progress 1.5s ease-in-out infinite;
+}
+
+@keyframes loader-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(330%);
+  }
+}
+
+/* Cartes itinéraires : retournement 3D au survol (desktop) et au défilement (mobile) */
+.flip-card {
+  perspective: 1400px;
+}
+
+.flip-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+.flip-card.is-flipped .flip-inner,
+.flip-card:focus-within .flip-inner {
+  transform: rotateY(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-inner,
+  .flip-card:focus-within .flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-plane,
+  .loader-bar {
+    animation: none;
+  }
+  .flip-inner {
+    transition: none;
+  }
+}

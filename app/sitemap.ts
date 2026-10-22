@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
+import { localizedHref } from "@/lib/i18n";
 
 const routes: { path: string; priority: number; changeFrequency: "weekly" | "monthly" | "yearly" }[] = [
   { path: "", priority: 1, changeFrequency: "weekly" },
@@ -21,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return routes.flatMap((route) => {
     const fr = `${SITE_URL}${route.path}`;
-    const en = `${SITE_URL}/en${route.path}`;
+    const en = `${SITE_URL}${localizedHref("en", route.path)}`;
     const languages = { fr, en };
 
     return [

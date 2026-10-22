@@ -28,6 +28,9 @@ export function LanguageSwitcher({
           <Link
             key={code}
             href={alternateLocaleHref(pathname, code)}
+            // Le proxy réécrit les routes : inutile de précharger l'autre langue
+            // (le préchargement d'une URL réécrite part en boucle).
+            prefetch={false}
             hrefLang={code}
             lang={code}
             aria-current={active ? "true" : undefined}

@@ -1,15 +1,23 @@
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlaneUp } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link href="/" className="group flex items-center gap-3" aria-label="FB Travel And Services, accueil">
       <span
-        className="relative grid h-11 w-11 place-items-center rounded-full bg-azur text-white ring-2 ring-soleil"
+        className={`grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[#fdf8ea] ring-1 transition-transform group-hover:scale-105 ${
+          light ? "ring-white/25" : "ring-nuit/10"
+        }`}
         aria-hidden="true"
       >
-        <FontAwesomeIcon icon={faPlaneUp} className="h-5 w-5 -rotate-12 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        <Image
+          src="/images/logo-fb-travel.svg"
+          alt=""
+          width={48}
+          height={48}
+          unoptimized
+          className="h-11 w-11 object-contain"
+        />
       </span>
       <span className="leading-none">
         <span

@@ -1,1 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#1b4fa8" stroke="#f4a300" stroke-width="4"/><path fill="#fff" d="M46 17 20 31l9 3 3 10 5-8 8-19z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="FB Travel And Services">
+  <defs>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffc24a" />
+      <stop offset="1" stop-color="#f29b0d" />
+    </linearGradient>
+    <clipPath id="inner">
+      <circle cx="256" cy="256" r="179" />
+    </clipPath>
+  </defs>
+
+  <!-- Orbite dorée, visible en croissant sous l'anneau -->
+  <circle
+    cx="256"
+    cy="256"
+    r="224"
+    fill="none"
+    stroke="#d99a12"
+    stroke-width="46"
+    stroke-linecap="round"
+    stroke-dasharray="560 900"
+    transform="rotate(105 256 256)"
+  />
+  <circle
+    cx="256"
+    cy="256"
+    r="224"
+    fill="none"
+    stroke="#f4b31b"
+    stroke-width="36"
+    stroke-linecap="round"
+    stroke-dasharray="560 900"
+    transform="rotate(105 256 256)"
+  />
+
+  <!-- Anneau extérieur -->
+  <circle cx="256" cy="256" r="203" fill="none" stroke="#0f2f5c" stroke-width="44" />
+
+  <g clip-path="url(#inner)">
+    <!-- Soleil -->
+    <rect x="70" y="70" width="372" height="372" fill="url(#sun)" />
+
+    <!-- Nuage -->
+    <path
+      d="M157 189c-10 0-18-8-18-18s8-18 18-18c2-12 12-21 25-21 12 0 23 7 27 18 3-1 6-2 9-2 11 0 20 8 20 19s-8 19-19 19z"
+      fill="#fff6dc"
+    />
+
+    <!-- Montagne arrière -->
+    <path d="M138 372 258 196l122 176z" fill="#2b6cae" />
+    <path d="M258 196 380 372h-69z" fill="#3f88c9" />
+    <path d="M258 196l30 42-17 4-13-15-12 15-14-4z" fill="#eaf4ff" />
+
+    <!-- Montagne avant -->
+    <path d="M74 392 190 228l118 164z" fill="#0f3a6b" />
+    <path
+      d="M190 228l20 28-12 2-8-9-9 9-10-2z"
+      fill="#eaf4ff"
+    />
+
+    <!-- Base sombre -->
+    <path d="M60 392c48-22 148-32 196-32s148 10 196 32v90H60z" fill="#0b2346" />
+  </g>
+
+  <!-- Avion -->
+  <g
+    transform="translate(378 148) rotate(-40) scale(0.44) translate(-288 -256)"
+    fill="#0f2f5c"
+    stroke="#fdf8ea"
+    stroke-width="18"
+    paint-order="stroke"
+    stroke-linejoin="round"
+  >
+    <path d="M482.3 192c34.2 0 93.7 29 93.7 64c0 36-59.5 64-93.7 64l-116.6 0L265.2 495.9c-5.7 10-16.3 16.1-27.8 16.1l-56.2 0c-10.6 0-18.3-10.2-15.4-20.4l49-171.6L112 320 68.8 377.6c-3 4-7.8 6.4-12.8 6.4l-42 0c-7.8 0-14-6.3-14-14c0-1.3 .2-2.6 .5-3.9L32 256 .5 145.9c-.4-1.3-.5-2.6-.5-3.9c0-7.8 6.3-14 14-14l42 0c5 0 9.8 2.4 12.8 6.4L112 192l102.9 0-49-171.6C162.9 10.2 170.6 0 181.2 0l56.2 0c11.5 0 22.1 6.2 27.8 16.1L365.7 192l116.6 0z" />
+  </g>
+</svg>

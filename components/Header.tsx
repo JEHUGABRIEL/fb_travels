@@ -124,7 +124,6 @@ export function Header() {
                   className="flex items-center justify-between border-b border-nuit/10 py-4 font-display text-xl font-bold"
                 >
                   {l.label}
-                  <span className="text-sm font-semibold text-azur">Voir</span>
                 </Link>
               </li>
             ))}

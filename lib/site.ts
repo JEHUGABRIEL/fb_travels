@@ -502,6 +502,33 @@ export const visaDocuments = [
   "Invitation ou documents professionnels selon le motif du séjour",
 ];
 
+export const heroSlides = [
+  {
+    image: "/images/hero-travel.jpg",
+    alt: "Avion en vol au coucher du soleil",
+    title: "Votre prochain voyage commence à Bangui.",
+    text: "Billets d'avion, hôtels, séjours, assurance et assistance visa. Une seule agence, au Parc du Cinquantenaire, pour préparer votre départ de A à Z.",
+  },
+  {
+    image: "/images/destinations/paris.jpg",
+    alt: "La tour Eiffel et la Seine, à Paris",
+    title: "Bangui – Paris, avec un seul interlocuteur.",
+    text: "Vol, hôtel et assurance : nous préparons l'ensemble de votre séjour et restons joignables jusqu'au départ.",
+  },
+  {
+    image: "/images/destinations/casablanca.jpg",
+    alt: "La mosquée Hassan II, à Casablanca",
+    title: "Le Maroc, à quelques heures de Bangui.",
+    text: "Business tour, city break ou rendez-vous professionnel : vols, hôtels et transferts organisés depuis l'agence.",
+  },
+  {
+    image: "/images/hotel-resort.jpg",
+    alt: "Hôtel avec piscine et vue sur la mer",
+    title: "Un hébergement confirmé avant de partir.",
+    text: "Séjour touristique ou mission : nous réservons l'hôtel adapté à votre budget et vous remettons la confirmation.",
+  },
+] as const;
+
 export const trustPoints = [
   "Agence locale, à Bangui",
   "Un seul interlocuteur pour tout le voyage",

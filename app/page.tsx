@@ -13,6 +13,7 @@ import {
   faSuitcaseRolling,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { HeroSlider } from "@/components/HeroSlider";
 import { SearchWidget } from "@/components/SearchWidget";
 import { SectionTitle } from "@/components/SectionTitle";
 import { DestinationGrid } from "@/components/DestinationGrid";
@@ -67,43 +68,7 @@ export default function Home() {
   return (
     <>
       {/* Hero + moteur de recherche */}
-      <section className="relative isolate overflow-hidden bg-nuit-profond">
-        <Image
-          src="/images/hero-travel.jpg"
-          alt="Avion en vol au coucher du soleil"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center opacity-45"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-b from-nuit-profond/85 via-nuit/75 to-nuit-profond/95"
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-7xl px-5 pb-44 pt-16 text-center sm:pt-20 lg:pt-24">
-          <div className="mx-auto max-w-3xl">
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[0.78rem] font-bold uppercase tracking-[0.18em] text-soleil-clair backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-soleil" />
-              Agence de voyage à Bangui
-            </p>
-            <h1 className="mt-6 font-display text-4xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-[4.4rem]">
-              Votre prochain voyage commence à Bangui.
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
-              Billets d&apos;avion, hôtels, séjours, assurance et assistance visa. Une seule agence,
-              au Parc du Cinquantenaire, pour préparer votre départ de A à Z.
-            </p>
-            <ul className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/75">
-              {trustPoints.slice(0, 3).map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faCircleCheck} className="h-4 w-4 text-soleil" />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      <HeroSlider />
 
       <div className="relative z-10 mx-auto -mt-36 max-w-6xl px-5">
         <SearchWidget />

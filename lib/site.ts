@@ -2,9 +2,21 @@ export const site = {
   name: "FB Travel And Services",
   short: "FB Travel",
   tagline: "L'expertise au service de vos besoins",
+  taglines: {
+    fr: "L'expertise au service de vos besoins",
+    en: "Local expertise for every trip",
+  },
   city: "Bangui",
   address: "Parc du Cinquantenaire, Lakouanga, face au restaurant Cafrina, Bangui",
+  addresses: {
+    fr: "Parc du Cinquantenaire, Lakouanga, face au restaurant Cafrina, Bangui",
+    en: "Parc du Cinquantenaire, Lakouanga, opposite the Cafrina restaurant, Bangui",
+  },
   addressShort: "Parc du Cinquantenaire, Lakouanga, Bangui",
+  addressesShort: {
+    fr: "Parc du Cinquantenaire, Lakouanga, Bangui",
+    en: "Parc du Cinquantenaire, Lakouanga, Bangui",
+  },
   email: "fb.travel@outlook.com",
   whatsapp: "23675293601",
   phones: [
@@ -584,6 +596,77 @@ export const trustPoints = [
   "Réponse directe sur WhatsApp ou par téléphone",
   "Dossiers visa vérifiés avec vous avant dépôt",
 ];
+
+export type Service = {
+  id: string;
+  title: string;
+  short: string;
+  long: string;
+  points: readonly string[];
+  icon: "plane" | "hotel" | "shield" | "passport" | "map" | "car";
+  message: string;
+};
+
+export type Offer = {
+  id: string;
+  destination: string;
+  airline: string;
+  detail: string;
+  price: string;
+  boardPrice: string;
+  note: string;
+  message: string;
+};
+
+export type HotelIdea = {
+  city: string;
+  country: string;
+  image: string;
+  headline: string;
+  text: string;
+  tag: string;
+};
+
+export type SightIdea = {
+  city: string;
+  country: string;
+  image: string;
+  text: string;
+  tag: string;
+};
+
+export type Tour = {
+  id: string;
+  category: string;
+  country: string;
+  city: string;
+  title: string;
+  text: string;
+  highlights: readonly string[];
+  image: string;
+  imageAlt: string;
+};
+
+export type HeroSlide = { image: string; alt: string; title: string; accent: string };
+export type Testimonial = { quote: string; name: string; detail: string };
+export type FaqItem = { q: string; a: string };
+
+export type Content = {
+  services: readonly Service[];
+  offers: readonly Offer[];
+  destinations: readonly Destination[];
+  hotelIdeas: readonly HotelIdea[];
+  sightIdeas: readonly SightIdea[];
+  tours: readonly Tour[];
+  tourCategories: readonly string[];
+  visaSteps: readonly { title: string; text: string }[];
+  visaDocuments: readonly string[];
+  heroSlides: readonly HeroSlide[];
+  testimonials: readonly Testimonial[];
+  partners: readonly string[];
+  trustPoints: readonly string[];
+  faqs: readonly FaqItem[];
+};
 
 export const faqs = [
   {

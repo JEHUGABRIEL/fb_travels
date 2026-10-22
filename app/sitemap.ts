@@ -18,10 +18,21 @@ const routes: { path: string; priority: number; changeFrequency: "weekly" | "mon
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-  return routes.map((r) => ({
-    url: `${SITE_URL}${r.path}`,
-    lastModified,
-    changeFrequency: r.changeFrequency,
-    priority: r.priority,
-  }));
+
+  return routes.flatMap((route) => {
+    const fr = `${SITE_URL}${route.path}`;
+    const en = `${SITE_URL}/en${route.path}`;
+    const languages = { fr, en };
+
+    return [
+      { url: fr, lastModified, changeFrequency: route.changeFrequency, priority: route.priority, alternates: { languages } },
+      {
+        url: en,
+        lastModified,
+        changeFrequency: route.changeFrequency,
+        priority: Math.max(0.1, route.priority - 0.1),
+        alternates: { languages },
+      },
+    ];
+  });
 }

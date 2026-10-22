@@ -3,6 +3,24 @@ import Link from "next/link";
 import { PageHero } from "./PageHero";
 import { JsonLd } from "./JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { localizedHref, type Locale } from "@/lib/i18n";
+
+const copy = {
+  fr: {
+    eyebrow: "Informations légales",
+    crumbs: "Fil d'Ariane",
+    home: "Accueil",
+    contents: "Sommaire",
+    updated: "Dernière mise à jour",
+  },
+  en: {
+    eyebrow: "Legal information",
+    crumbs: "Breadcrumb",
+    home: "Home",
+    contents: "Contents",
+    updated: "Last updated",
+  },
+} as const;
 
 export function LegalPage({
   title,
@@ -11,6 +29,7 @@ export function LegalPage({
   updated,
   sections,
   children,
+  locale = "fr",
 }: {
   title: string;
   intro: string;
@@ -18,23 +37,25 @@ export function LegalPage({
   updated: string;
   sections: { id: string; title: string }[];
   children: ReactNode;
+  locale?: Locale;
 }) {
+  const t = copy[locale];
   return (
     <>
-      <PageHero eyebrow="Informations légales" title={title} intro={intro} />
+      <PageHero eyebrow={t.eyebrow} title={title} intro={intro} />
 
       <div className="mx-auto max-w-7xl px-5 py-12">
-        <nav aria-label="Fil d'Ariane" className="text-sm text-nuit/55">
-          <Link href="/" className="font-semibold text-azur hover:text-nuit">
-            Accueil
+        <nav aria-label={t.crumbs} className="text-sm text-nuit/55">
+          <Link href={localizedHref(locale, "/")} className="font-semibold text-azur hover:text-nuit">
+            {t.home}
           </Link>
           <span aria-hidden="true"> / </span>
           <span>{title}</span>
         </nav>
 
         <div className="mt-8 grid gap-12 lg:grid-cols-[240px_1fr]">
-          <nav aria-label="Sommaire" className="lg:sticky lg:top-32 lg:self-start">
-            <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-azur">Sommaire</p>
+          <nav aria-label={t.contents} className="lg:sticky lg:top-32 lg:self-start">
+            <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-azur">{t.contents}</p>
             <ol className="mt-4 space-y-2 border-l border-nuit/15 pl-4 text-sm">
               {sections.map((s, i) => (
                 <li key={s.id}>
@@ -44,7 +65,7 @@ export function LegalPage({
                 </li>
               ))}
             </ol>
-            <p className="mt-7 text-xs text-nuit/45">Dernière mise à jour : {updated}</p>
+            <p className="mt-7 text-xs text-nuit/45">{t.updated} : {updated}</p>
           </nav>
 
           <article className="max-w-3xl space-y-10">{children}</article>
@@ -53,9 +74,9 @@ export function LegalPage({
 
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Accueil", path: "/" },
+          { name: t.home, path: "/" },
           { name: title, path },
-        ])}
+        ], locale)}
       />
     </>
   );

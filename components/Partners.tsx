@@ -1,6 +1,20 @@
-import { partners } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
 
-export function Partners() {
+const copy = {
+  fr: {
+    title: "Nos partenaires",
+    text: "Les compagnies aériennes et les hôteliers avec lesquels nous travaillons au quotidien, depuis Bangui.",
+  },
+  en: {
+    title: "Our partners",
+    text: "The airlines and hoteliers we work with every day, from Bangui.",
+  },
+} as const;
+
+export function Partners({ locale = "fr" }: { locale?: Locale }) {
+  const t = copy[locale];
+  const { partners } = getContent(locale);
   return (
     <section aria-labelledby="partenaires" className="border-y border-nuit/10 bg-brume">
       <div className="mx-auto grid max-w-7xl gap-7 px-5 py-12 lg:grid-cols-[17rem_1fr] lg:items-center lg:gap-12">
@@ -9,11 +23,10 @@ export function Partners() {
             id="partenaires"
             className="text-[0.78rem] font-bold uppercase tracking-[0.2em] text-azur"
           >
-            Nos partenaires
+            {t.title}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-nuit/65">
-            Les compagnies aériennes et les hôteliers avec lesquels nous travaillons au quotidien,
-            depuis Bangui.
+            {t.text}
           </p>
         </div>
         <ul className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">

@@ -1,6 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
-import { offers } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+
+const copy = {
+  fr: {
+    aria: "Offres au départ de Bangui",
+    title: "Départs de Bangui",
+    subtitle: "Offres du moment",
+    note: "Tarifs de départ. Dates et disponibilités à confirmer auprès de l'agence.",
+  },
+  en: {
+    aria: "Offers departing from Bangui",
+    title: "Departures from Bangui",
+    subtitle: "Current offers",
+    note: "Starting fares. Dates and availability to be confirmed with the agency.",
+  },
+} as const;
 
 function Tiles({ text, row, className = "" }: { text: string; row: number; className?: string }) {
   const chars = Array.from(text.toUpperCase());
@@ -10,11 +26,7 @@ function Tiles({ text, row, className = "" }: { text: string; row: number; class
         c === " " ? (
           <span key={i} className="tile-gap" />
         ) : (
-          <span
-            key={i}
-            className="tile"
-            style={{ animationDelay: `${300 + row * 260 + i * 38}ms` }}
-          >
+          <span key={i} className="tile" style={{ animationDelay: `${300 + row * 260 + i * 38}ms` }}>
             {c}
           </span>
         ),
@@ -23,18 +35,21 @@ function Tiles({ text, row, className = "" }: { text: string; row: number; class
   );
 }
 
-export function DepartureBoard() {
+export function DepartureBoard({ locale = "fr" }: { locale?: Locale }) {
+  const t = copy[locale];
+  const { offers } = getContent(locale);
+
   return (
     <section
-      aria-label="Offres au départ de Bangui"
+      aria-label={t.aria}
       className="board rounded-sm bg-nuit-profond p-5 shadow-2xl shadow-black/40 ring-1 ring-white/10 sm:p-7"
     >
       <div className="flex items-center justify-between border-b border-white/15 pb-4">
         <h2 className="flex items-center gap-3 font-display text-xl font-bold text-white">
           <FontAwesomeIcon icon={faPlaneDeparture} className="h-5 w-5 text-soleil" />
-          Départs de Bangui
+          {t.title}
         </h2>
-        <span className="text-sm text-white/60">Offres du moment</span>
+        <span className="text-sm text-white/60">{t.subtitle}</span>
       </div>
 
       <ul className="divide-y divide-white/10">
@@ -57,9 +72,7 @@ export function DepartureBoard() {
         ))}
       </ul>
 
-      <p className="border-t border-white/15 pt-4 text-[0.82rem] text-white/60">
-        Tarifs de départ. Dates et disponibilités à confirmer auprès de l'agence.
-      </p>
+      <p className="border-t border-white/15 pt-4 text-[0.82rem] text-white/60">{t.note}</p>
     </section>
   );
 }

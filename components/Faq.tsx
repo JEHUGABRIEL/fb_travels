@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { faqs } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
 
-export function Faq() {
+export function Faq({ locale = "fr" }: { locale?: Locale }) {
+  const { faqs } = getContent(locale);
   return (
     <div className="divide-y divide-nuit/15 border-y border-nuit/15">
       {faqs.map((f) => (

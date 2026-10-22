@@ -5,11 +5,29 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleCheck, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { tourCategories, tours, whatsappLink } from "@/lib/site";
+import type { Tour } from "@/lib/site";
+import { whatsappLink } from "@/lib/site";
+import type { Locale } from "@/lib/i18n";
 
-type Tour = (typeof tours)[number];
+const copy = {
+  fr: {
+    see: "Voir le programme",
+    ask: "Demander ce programme",
+    filter: "Filtrer par type de séjour",
+    hint: "Survolez une carte pour découvrir le programme (sur mobile, elle se retourne au défilement). Ces itinéraires sont des exemples : dates, durée, hôtels et activités sont ajustés avec vous avant toute réservation.",
+    message: (title: string) => `Bonjour FB Travel, je souhaite des informations sur le programme « ${title} ».`,
+  },
+  en: {
+    see: "See the programme",
+    ask: "Request this programme",
+    filter: "Filter by type of trip",
+    hint: "Hover over a card to see the programme (on mobile, it flips as you scroll). These itineraries are examples: dates, duration, hotels and activities are tailored with you before booking.",
+    message: (title: string) => `Hello FB Travel, I would like information about the “${title}” programme.`,
+  },
+} as const;
 
-function TourCard({ tour }: { tour: Tour }) {
+function TourCard({ tour, locale }: { tour: Tour; locale: Locale }) {
+  const t = copy[locale];
   const ref = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
@@ -61,7 +79,7 @@ function TourCard({ tour }: { tour: Tour }) {
             </h3>
             <p className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-soleil-clair">
               <FontAwesomeIcon icon={faRotate} className="h-3.5 w-3.5" />
-              Voir le programme
+              {t.see}
             </p>
           </div>
         </div>
@@ -86,15 +104,13 @@ function TourCard({ tour }: { tour: Tour }) {
               ))}
             </ul>
             <a
-              href={whatsappLink(
-                `Bonjour FB Travel, je souhaite des informations sur le programme « ${tour.title} ».`,
-              )}
+              href={whatsappLink(t.message(tour.title))}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-soleil-clair hover:text-white"
             >
               <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
-              Demander ce programme
+              {t.ask}
               <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3" />
             </a>
           </div>
@@ -104,14 +120,15 @@ function TourCard({ tour }: { tour: Tour }) {
   );
 }
 
-export function TourGrid() {
-  const [category, setCategory] = useState<string>("Tous");
-  const filtered = category === "Tous" ? tours : tours.filter((t) => t.category === category);
+export function TourGrid({ tours, categories, locale = "fr" }: { tours: readonly Tour[]; categories: readonly string[]; locale?: Locale }) {
+  const [category, setCategory] = useState<string>(categories[0]);
+  const filtered = category === categories[0] ? tours : tours.filter((t) => t.category === category);
+  const t = copy[locale];
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrer par type de séjour">
-        {tourCategories.map((c) => (
+      <div className="flex flex-wrap gap-2" role="group" aria-label={t.filter}>
+        {categories.map((c) => (
           <button
             key={c}
             type="button"
@@ -129,15 +146,13 @@ export function TourGrid() {
       </div>
 
       <ul className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {filtered.map((t) => (
-          <TourCard key={t.id} tour={t} />
+        {filtered.map((tour) => (
+          <TourCard key={tour.id} tour={tour} locale={locale} />
         ))}
       </ul>
 
       <p className="mt-6 text-sm text-nuit/55">
-        Survolez une carte pour découvrir le programme (sur mobile, elle se retourne au défilement).
-        Ces itinéraires sont des exemples : dates, durée, hôtels et activités sont ajustés avec vous
-        avant toute réservation.
+        {t.hint}
       </p>
     </div>
   );

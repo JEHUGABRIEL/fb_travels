@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+
 type City = { name: string; lon: number; lat: number; dx?: number; dy?: number; anchor?: "start" | "end" | "middle" };
 
 const W = 1000;
@@ -28,7 +30,7 @@ function arc(a: { x: number; y: number }, b: { x: number; y: number }) {
   return `M ${a.x.toFixed(1)} ${a.y.toFixed(1)} Q ${mx.toFixed(1)} ${(my - lift).toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
 }
 
-export function RouteMap() {
+export function RouteMap({ locale = "fr" }: { locale?: Locale }) {
   const origin = project(hub.lon, hub.lat);
 
   return (
@@ -36,7 +38,11 @@ export function RouteMap() {
       <svg
         viewBox={`0 0 ${W} ${H}`}
         role="img"
-        aria-label="Carte des liaisons au départ de Bangui vers Douala, Dakar, Casablanca, Paris et Kigali"
+        aria-label={
+          locale === "fr"
+            ? "Carte des liaisons au départ de Bangui vers Douala, Dakar, Casablanca, Paris et Kigali"
+            : "Map of routes from Bangui to Douala, Dakar, Casablanca, Paris and Kigali"
+        }
         className="h-auto w-full"
       >
         <defs>
@@ -92,7 +98,9 @@ export function RouteMap() {
         </g>
       </svg>
       <figcaption className="sr-only">
-        Liaisons proposées au départ de Bangui : Douala, Dakar, Casablanca, Paris et Kigali.
+        {locale === "fr"
+          ? "Liaisons proposées au départ de Bangui : Douala, Dakar, Casablanca, Paris et Kigali."
+          : "Routes offered from Bangui: Douala, Dakar, Casablanca, Paris and Kigali."}
       </figcaption>
     </figure>
   );

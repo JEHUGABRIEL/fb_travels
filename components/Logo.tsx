@@ -1,9 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Locale } from "@/lib/i18n";
 
-export function Logo({ light = false }: { light?: boolean }) {
+export function Logo({ light = false, locale = "fr" }: { light?: boolean; locale?: Locale }) {
   return (
-    <Link href="/" className="group flex items-center gap-2.5" aria-label="FB Travel And Services, accueil">
+    <Link
+      href={locale === "fr" ? "/" : "/en"}
+      className="group flex items-center gap-2.5"
+      aria-label={locale === "fr" ? "FB Travel And Services, accueil" : "FB Travel And Services, home"}
+    >
       <span
         className={`grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[#fdf8ea] ring-1 transition-transform group-hover:scale-105 ${
           light ? "ring-white/25" : "ring-nuit/10"

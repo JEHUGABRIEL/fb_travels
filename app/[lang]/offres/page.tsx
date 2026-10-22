@@ -3,25 +3,58 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { PageHero } from "@/components/PageHero";
-import { offers, whatsappLink } from "@/lib/site";
+import { getContent } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
+import { getLocale } from "@/lib/i18n.server";
+import { whatsappLink } from "@/lib/site";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Offres de vols et séjours à Bangui",
-  description:
-    "Bangui – Douala à partir de 285 700 FCFA avec ECAir, -20 % sur les billets RwandAir, devis pour Dakar et Paris.",
-  path: "/offres",
-  keywords: ["offre vol Bangui Douala", "promotion RwandAir Bangui", "billet avion pas cher Centrafrique"],
-});
+const copy = {
+  fr: {
+    metaTitle: "Offres de vols et séjours à Bangui",
+    metaDescription:
+      "Bangui – Douala à partir de 285 700 FCFA avec ECAir, -20 % sur les billets RwandAir, devis pour Dakar et Paris.",
+    metaKeywords: ["offre vol Bangui Douala", "promotion RwandAir Bangui", "billet avion pas cher Centrafrique"],
+    eyebrow: "Offres",
+    title: "Les offres du moment.",
+    intro:
+      "Des prix de départ au départ de Bangui. Dites-nous vos dates, nous confirmons la disponibilité et le tarif exact.",
+    reserve: "Réserver cette offre",
+    note: "Tarifs de départ, soumis à disponibilité. Le prix final est confirmé par l'agence avant toute réservation.",
+  },
+  en: {
+    metaTitle: "Flight and trip offers in Bangui",
+    metaDescription:
+      "Bangui – Douala from XAF 285,700 with ECAir, -20% on RwandAir tickets, quotes for Dakar and Paris.",
+    metaKeywords: ["flight offer Bangui Douala", "RwandAir promotion Bangui", "cheap flights Central African Republic"],
+    eyebrow: "Offers",
+    title: "This season's offers.",
+    intro:
+      "Starting fares from Bangui. Tell us your dates and we confirm availability and the exact price.",
+    reserve: "Book this offer",
+    note: "Starting fares, subject to availability. The final price is confirmed by the agency before any booking.",
+  },
+} as const;
 
-export default function OffresPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = copy[locale];
+  return buildMetadata({
+    title: t.metaTitle,
+    description: t.metaDescription,
+    path: "/offres",
+    keywords: [...t.metaKeywords],
+    locale,
+  });
+}
+
+export default async function OffresPage() {
+  const locale = await getLocale();
+  const t = copy[locale];
+  const { offers } = getContent(locale);
+
   return (
     <>
-      <PageHero
-        eyebrow="Offres"
-        title="Les offres du moment."
-        intro="Des prix de départ au départ de Bangui. Dites-nous vos dates, nous confirmons la disponibilité et le tarif exact."
-      />
+      <PageHero eyebrow={t.eyebrow} title={t.title} intro={t.intro} />
 
       <section className="mx-auto max-w-7xl px-5 py-20">
         <ul className="grid gap-5 lg:grid-cols-2">
@@ -49,7 +82,7 @@ export default function OffresPage() {
                 className="mt-auto inline-flex w-fit items-center gap-2.5 pt-6 font-bold text-azur hover:text-nuit"
               >
                 <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
-                Réserver cette offre
+                {t.reserve}
                 <FontAwesomeIcon icon={faArrowRight} className="h-3.5 w-3.5" />
               </a>
             </li>
@@ -58,8 +91,7 @@ export default function OffresPage() {
 
         <p className="mt-8 flex items-start gap-3 text-sm text-nuit/60">
           <FontAwesomeIcon icon={faCircleCheck} className="mt-0.5 h-4 w-4 shrink-0 text-azur" />
-          Tarifs de départ, soumis à disponibilité. Le prix final est confirmé par l&apos;agence avant
-          toute réservation.
+          {t.note}
         </p>
       </section>
     </>

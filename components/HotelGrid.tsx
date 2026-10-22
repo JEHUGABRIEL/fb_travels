@@ -1,9 +1,18 @@
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { hotelIdeas, whatsappLink } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import { whatsappLink } from "@/lib/site";
+import type { Locale } from "@/lib/i18n";
 
-export function HotelGrid() {
+const copy = {
+  fr: { quote: "Demander un devis", message: (city: string) => `Bonjour FB Travel, je souhaite un hôtel à ${city}.` },
+  en: { quote: "Request a quote", message: (city: string) => `Hello FB Travel, I would like a hotel in ${city}.` },
+} as const;
+
+export function HotelGrid({ locale = "fr" }: { locale?: Locale }) {
+  const t = copy[locale];
+  const { hotelIdeas } = getContent(locale);
   return (
     <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {hotelIdeas.map((h) => (
@@ -28,12 +37,12 @@ export function HotelGrid() {
             <p className="font-semibold">{h.headline}</p>
             <p className="mt-1.5 text-sm text-nuit/70">{h.text}</p>
             <a
-              href={whatsappLink(`Bonjour FB Travel, je souhaite un hôtel à ${h.city}.`)}
+              href={whatsappLink(t.message(h.city))}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-azur hover:text-nuit"
             >
-              Demander un devis
+              {t.quote}
               <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3" />
             </a>
           </div>

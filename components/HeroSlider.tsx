@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
-import { heroSlides } from "@/lib/site";
+import type { HeroSlide } from "@/lib/site";
+import type { Locale } from "@/lib/i18n";
 
 const DELAY = 6000;
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -21,7 +22,12 @@ function getServerReducedMotion() {
   return false;
 }
 
-export function HeroSlider() {
+const aria: Record<Locale, string> = {
+  fr: "FB Travel And Services, agence de voyage à Bangui",
+  en: "FB Travel And Services, travel agency in Bangui",
+};
+
+export function HeroSlider({ slides, locale = "fr" }: { slides: readonly HeroSlide[]; locale?: Locale }) {
   const [index, setIndex] = useState(0);
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -33,18 +39,18 @@ export function HeroSlider() {
   useEffect(() => {
     if (!playing) return;
     const id = window.setTimeout(() => {
-      setIndex((current) => (current + 1) % heroSlides.length);
+      setIndex((current) => (current + 1) % slides.length);
     }, DELAY);
     return () => window.clearTimeout(id);
-  }, [playing, index]);
+  }, [playing, index, slides.length]);
 
   return (
     <section
-      aria-label="FB Travel And Services, agence de voyage à Bangui"
+      aria-label={aria[locale]}
       className="relative isolate overflow-hidden bg-nuit-profond"
     >
       <div className="absolute inset-0" aria-hidden="true">
-        {heroSlides.map((slide, i) => (
+        {slides.map((slide, i) => (
           <Image
             key={slide.image}
             src={slide.image}
@@ -52,17 +58,17 @@ export function HeroSlider() {
             fill
             priority={i === 0}
             sizes="100vw"
-            className={`hero-image object-cover object-center ${i === index ? "opacity-50" : "opacity-0"}`}
+            className={`hero-image object-cover object-center ${i === index ? "opacity-75" : "opacity-0"}`}
             style={{ transform: i === index ? "scale(1.06)" : "scale(1)" }}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-nuit-profond/85 via-nuit/75 to-nuit-profond/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-nuit-profond/65 via-nuit/50 to-nuit-profond/80" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 pb-44 pt-16 text-center sm:pt-20 lg:pt-24">
+      <div className="relative mx-auto flex min-h-[30rem] max-w-7xl items-center justify-center px-5 pb-40 pt-16 text-center sm:min-h-[34rem] sm:pt-20 lg:min-h-[39rem] lg:pt-24">
         <div className="mx-auto max-w-4xl">
           <div className="grid">
-            {heroSlides.map((slide, i) => {
+            {slides.map((slide, i) => {
               const active = i === index;
               const Title = i === 0 ? "h1" : "h2";
               const at = slide.title.indexOf(slide.accent);

@@ -2,9 +2,18 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { destinations, whatsappLink } from "@/lib/site";
+import { whatsappLink } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
 
-export function DestinationGrid({ limit }: { limit?: number }) {
+const copy = {
+  fr: { from: "À partir de", quote: "Demander un devis" },
+  en: { from: "From", quote: "Request a quote" },
+} as const;
+
+export function DestinationGrid({ limit, locale = "fr" }: { limit?: number; locale?: Locale }) {
+  const t = copy[locale];
+  const { destinations } = getContent(locale);
   const items = limit ? destinations.slice(0, limit) : destinations;
 
   return (
@@ -62,7 +71,7 @@ export function DestinationGrid({ limit }: { limit?: number }) {
                 </div>
                 <div className="text-left sm:text-right">
                   <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-white/50">
-                    À partir de
+                    {t.from}
                   </p>
                   <p className="font-display text-xl font-extrabold text-soleil-clair sm:text-2xl">
                     {d.price}
@@ -73,7 +82,7 @@ export function DestinationGrid({ limit }: { limit?: number }) {
               <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/15 pt-4">
                 <p className="text-sm text-white/65">{d.detail}</p>
                 <span className="inline-flex items-center gap-2 rounded-full bg-soleil px-4 py-2 text-sm font-bold text-nuit transition-colors group-hover:bg-soleil-clair">
-                  Demander un devis
+                  {t.quote}
                   <FontAwesomeIcon
                     icon={faArrowRight}
                     className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"

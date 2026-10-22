@@ -3,7 +3,33 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight, faStar } from "@fortawesome/free-solid-svg-icons";
-import { testimonials } from "@/lib/site";
+import type { Testimonial } from "@/lib/site";
+import type { Locale } from "@/lib/i18n";
+
+const copy = {
+  fr: {
+    eyebrow: "Témoignages",
+    title: "Ils sont partis",
+    accent: "avec nous",
+    intro: "Des départs de Bangui, des dossiers bouclés et des retours sans mauvaise surprise.",
+    prev: "Témoignages précédents",
+    next: "Témoignages suivants",
+    carousel: "Témoignages de voyageurs",
+    rating: "Note : 5 étoiles sur 5",
+    page: (n: number) => `Page ${n} des témoignages`,
+  },
+  en: {
+    eyebrow: "Testimonials",
+    title: "They travelled",
+    accent: "with us",
+    intro: "Departures from Bangui, files completed and returns with no unpleasant surprises.",
+    prev: "Previous testimonials",
+    next: "Next testimonials",
+    carousel: "Traveller testimonials",
+    rating: "Rating: 5 out of 5 stars",
+    page: (n: number) => `Testimonial page ${n}`,
+  },
+} as const;
 
 const AUTOPLAY = 7000;
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -51,7 +77,8 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-export function Testimonials() {
+export function Testimonials({ testimonials, locale = "fr" }: { testimonials: readonly Testimonial[]; locale?: Locale }) {
+  const labels = copy[locale];
   const perView = usePerView();
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -62,12 +89,12 @@ export function Testimonials() {
   const [paused, setPaused] = useState(false);
 
   const pages = useMemo(() => {
-    const groups: (typeof testimonials)[number][][] = [];
+    const groups: Testimonial[][] = [];
     for (let i = 0; i < testimonials.length; i += perView) {
       groups.push(testimonials.slice(i, i + perView));
     }
     return groups;
-  }, [perView]);
+  }, [perView, testimonials]);
 
   // Le nombre de pages change avec le viewport : on borne l'index à l'affichage.
   const pageCount = pages.length;
@@ -89,16 +116,16 @@ export function Testimonials() {
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div className="max-w-2xl">
           <p className="text-[0.78rem] font-bold uppercase tracking-[0.2em] text-azur">
-            Témoignages
+            {labels.eyebrow}
           </p>
           <h2
             id="temoignages"
             className="mt-3 text-balance font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-5xl"
           >
-            Ils sont partis <span className="font-serif italic text-azur">avec nous</span>.
+            {labels.title} <span className="font-serif italic text-azur">{labels.accent}</span>.
           </h2>
           <p className="mt-4 text-nuit/70">
-            Des départs de Bangui, des dossiers bouclés et des retours sans mauvaise surprise.
+            {labels.intro}
           </p>
         </div>
 
@@ -106,7 +133,7 @@ export function Testimonials() {
           <button
             type="button"
             onClick={() => go(-1)}
-            aria-label="Témoignages précédents"
+            aria-label={labels.prev}
             className="grid h-11 w-11 place-items-center rounded-full border border-nuit/20 text-nuit transition-colors hover:border-nuit hover:bg-nuit hover:text-white"
           >
             <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />
@@ -114,7 +141,7 @@ export function Testimonials() {
           <button
             type="button"
             onClick={() => go(1)}
-            aria-label="Témoignages suivants"
+            aria-label={labels.next}
             className="grid h-11 w-11 place-items-center rounded-full border border-nuit/20 text-nuit transition-colors hover:border-nuit hover:bg-nuit hover:text-white"
           >
             <FontAwesomeIcon icon={faArrowRight} className="h-4 w-4" />
@@ -125,7 +152,7 @@ export function Testimonials() {
       <div
         role="group"
         aria-roledescription="carrousel"
-        aria-label="Témoignages de voyageurs"
+        aria-label={labels.carousel}
         className="mt-10 overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -156,7 +183,7 @@ export function Testimonials() {
                         <FontAwesomeIcon key={i} icon={faStar} className="h-3 w-3" />
                       ))}
                     </span>
-                    <span className="sr-only">Note : 5 étoiles sur 5</span>
+                    <span className="sr-only">{labels.rating}</span>
                   </div>
                   <blockquote className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-nuit/80">
                     {t.quote}
@@ -183,7 +210,7 @@ export function Testimonials() {
             key={group[0]?.name ?? i}
             type="button"
             onClick={() => setPage(i)}
-            aria-label={`Page ${i + 1} des témoignages`}
+            aria-label={labels.page(i + 1)}
             aria-current={i === currentPage}
             className={`h-2 rounded-full transition-all ${
               i === currentPage ? "w-7 bg-azur" : "w-2 bg-nuit/20 hover:bg-nuit/40"

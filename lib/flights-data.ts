@@ -61,3 +61,24 @@ export type FlightSearchResult = {
   offers: FlightOffer[];
   mode: "live" | "test";
 };
+
+export const flightDestinationsEn = [
+  { code: "DLA", city: "Douala", country: "Cameroon" },
+  { code: "CDG", city: "Paris", country: "France" },
+  { code: "DKR", city: "Dakar", country: "Senegal" },
+  { code: "CMN", city: "Casablanca", country: "Morocco" },
+  { code: "KGL", city: "Kigali", country: "Rwanda" },
+  { code: "IST", city: "Istanbul", country: "Türkiye" },
+  { code: "DXB", city: "Dubai", country: "United Arab Emirates" },
+  { code: "ADD", city: "Addis Ababa", country: "Ethiopia" },
+  { code: "BRU", city: "Brussels", country: "Belgium" },
+  { code: "ABJ", city: "Abidjan", country: "Côte d'Ivoire" },
+  { code: "LBV", city: "Libreville", country: "Gabon" },
+  { code: "NSI", city: "Yaoundé", country: "Cameroon" },
+] as const;
+
+export const cabinsEn = [
+  { value: "economy", label: "Economy" },
+  { value: "business", label: "Business" },
+  { value: "first", label: "First" },
+] as const;
